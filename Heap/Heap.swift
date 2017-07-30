@@ -14,9 +14,24 @@ struct Heap<T: Comparable> {
    * children are at 2n+1 and 2n+2.
    */
   private var storage: Array<T>;
+  private var comparator: (T, T) -> Bool;
+
+  enum HeapType: Int {
+    case minHeap, maxHeap
+  }
 
   init() {
-    storage = Array<T>();
+    self.init(heapType: .minHeap);
+  }
+
+  init(heapType: HeapType) {
+    switch heapType {
+    case .maxHeap:
+      comparator = (>);
+    default:
+      comparator = (<);
+    }
+    self.storage = Array<T>();
   }
 
   func top() -> T {
@@ -43,12 +58,6 @@ struct Heap<T: Comparable> {
     }
   }
 
-  var underlyingStorage: Array<T> {
-    get {
-      return storage;
-    }
-  }
-
   func validate() -> Bool {
     for i in 0 ..< storage.count {
       if !validate(elementAt: i) {
@@ -63,10 +72,10 @@ struct Heap<T: Comparable> {
     let cidx1 = 2 * idx + 1;
     let cidx2 = 2 * idx + 2;
 
-    if cidx1 < storage.count && storage[idx] > storage[cidx1] {
+    if cidx1 < storage.count && !comparator(storage[idx], storage[cidx1]) {
       return false;
     }
-    if cidx2 < storage.count && storage[idx] > storage[cidx2] {
+    if cidx2 < storage.count && !comparator(storage[idx], storage[cidx2]) {
       return false;
     }
     return true;
@@ -79,7 +88,7 @@ struct Heap<T: Comparable> {
       if cidx < storage.count {
         let val = storage[idx];
         let cval = storage[cidx];
-        if val > cval {
+        if !comparator(val, cval) {
           storage[idx] = cval;
           storage[cidx] = val;
           self.siftDown(fromIndex: cidx);
@@ -95,7 +104,7 @@ struct Heap<T: Comparable> {
       pidx = (idx - 1) / 2;
       let val = storage[idx];
       let pval = storage[pidx];
-      if pval > val {
+      if !comparator(pval, val) {
         storage[pidx] = val;
         storage[idx] = pval;
       }

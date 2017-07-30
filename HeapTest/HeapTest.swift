@@ -45,7 +45,6 @@ class HeapTest: XCTestCase {
       h.add(Int(arc4random()));
     }
 
-    XCTAssertTrue(h.underlyingStorage[0] == h.underlyingStorage.min()!);
     XCTAssertTrue(h.validate());
   }
 
@@ -61,8 +60,15 @@ class HeapTest: XCTestCase {
     XCTAssertEqual(h.removeFirst(), expected);
   }
 
-  func testTopIsMin() {
+  func testDefaultTypeIsMinHeap() {
     var h: Heap<UInt32> = Heap<UInt32>();
+    h.add(0);
+    h.add(1);
+    XCTAssertEqual(h.top(), 0);
+  }
+
+  func testTopIsMinForMinHeap() {
+    var h: Heap<UInt32> = Heap<UInt32>(heapType: .minHeap);
     var min: UInt32 = UInt32.max;
     for _ in 0 ..< 10000 {
       let n = arc4random();
@@ -72,6 +78,19 @@ class HeapTest: XCTestCase {
       h.add(n);
     }
     XCTAssertEqual(h.top(), min);
+  }
+
+  func testTopIsMaxForMaxHeap() {
+    var h: Heap<UInt32> = Heap<UInt32>(heapType: .maxHeap);
+    var max: UInt32 = UInt32.min;
+    for _ in 0 ..< 10000 {
+      let n = arc4random();
+      if n > max {
+        max = n;
+      }
+      h.add(n);
+    }
+    XCTAssertEqual(h.top(), max);
   }
 
   func testRemoveFirstRetainsValidity() {
