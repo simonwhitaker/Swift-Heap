@@ -6,7 +6,7 @@
 //  Copyright © 2017 Simon Whitaker. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 struct Heap<T: Comparable> {
   /*
@@ -19,6 +19,8 @@ struct Heap<T: Comparable> {
   enum HeapType: Int {
     case minHeap, maxHeap
   }
+
+  // Initialisation
 
   init() {
     self.init(heapType: .minHeap);
@@ -34,23 +36,12 @@ struct Heap<T: Comparable> {
     self.storage = Array<T>();
   }
 
-  func top() -> T? {
-    return storage.first;
-  }
+  // Public properties
 
-  mutating func add(_ newElement: T) {
-    storage.append(newElement);
-    self.siftUp(fromIndex: storage.count - 1);
-  }
-
-  mutating func removeFirst() -> T? {
-    if let result = self.top(),
-      let tail = self.storage.popLast() {
-      self.storage[0] = tail;
-      self.siftDown(fromIndex: 0)
-      return result;
+  var top: T? {
+    get {
+      return storage.first;
     }
-    return nil;
   }
 
   var count: Int {
@@ -59,28 +50,24 @@ struct Heap<T: Comparable> {
     }
   }
 
-  func validate() -> Bool {
-    for i in 0 ..< storage.count {
-      if !validate(elementAt: i) {
-        return false;
-      }
-    }
-    return true;
+  // Public mutators
+
+  mutating func add(_ newElement: T) {
+    storage.append(newElement);
+    self.siftUp(fromIndex: storage.count - 1);
   }
 
-  func validate(elementAt: Int) -> Bool {
-    let idx = elementAt;
-    let cidx1 = 2 * idx + 1;
-    let cidx2 = 2 * idx + 2;
-
-    if cidx1 < storage.count && !predicate(storage[idx], storage[cidx1]) {
-      return false;
+  mutating func removeFirst() -> T? {
+    if let result = self.top,
+      let tail = self.storage.popLast() {
+      self.storage[0] = tail;
+      self.siftDown(fromIndex: 0)
+      return result;
     }
-    if cidx2 < storage.count && !predicate(storage[idx], storage[cidx2]) {
-      return false;
-    }
-    return true;
+    return nil;
   }
+
+  // Invariant maintainers
 
   mutating private func siftDown(fromIndex: Int) {
     let idx = fromIndex;
@@ -111,5 +98,30 @@ struct Heap<T: Comparable> {
       }
       idx = pidx;
     }
+  }
+
+  // Validation
+
+  func validate() -> Bool {
+    for i in 0 ..< storage.count {
+      if !validate(elementAt: i) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  func validate(elementAt: Int) -> Bool {
+    let idx = elementAt;
+    let cidx1 = 2 * idx + 1;
+    let cidx2 = 2 * idx + 2;
+
+    if cidx1 < storage.count && !predicate(storage[idx], storage[cidx1]) {
+      return false;
+    }
+    if cidx2 < storage.count && !predicate(storage[idx], storage[cidx2]) {
+      return false;
+    }
+    return true;
   }
 }
