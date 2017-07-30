@@ -34,8 +34,8 @@ struct Heap<T: Comparable> {
     self.storage = Array<T>();
   }
 
-  func top() -> T {
-    return storage[0];
+  func top() -> T? {
+    return storage.first;
   }
 
   mutating func add(_ newElement: T) {
@@ -43,13 +43,14 @@ struct Heap<T: Comparable> {
     self.siftUp(fromIndex: storage.count - 1);
   }
 
-  mutating func removeFirst() -> T {
-    let result = self.top();
-    if let tail = self.storage.popLast() {
+  mutating func removeFirst() -> T? {
+    if let result = self.top(),
+      let tail = self.storage.popLast() {
       self.storage[0] = tail;
       self.siftDown(fromIndex: 0)
+      return result;
     }
-    return result;
+    return nil;
   }
 
   var count: Int {

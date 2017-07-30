@@ -26,16 +26,16 @@ class HeapTest: XCTestCase {
     var h: Heap<Int> = Heap<Int>();
 
     h.add(34);
-    XCTAssertEqual(h.top(), 34);
+    XCTAssertEqual(h.top()!, 34);
 
     h.add(21);
-    XCTAssertEqual(h.top(), 21);
+    XCTAssertEqual(h.top()!, 21);
 
     h.add(22);
-    XCTAssertEqual(h.top(), 21);
+    XCTAssertEqual(h.top()!, 21);
 
     h.add(2);
-    XCTAssertEqual(h.top(), 2);
+    XCTAssertEqual(h.top()!, 2);
   }
 
   func testValidation() {
@@ -55,7 +55,7 @@ class HeapTest: XCTestCase {
       h.add(Int(arc4random()));
     }
 
-    let expected = h.top();
+    let expected = h.top()!;
     XCTAssertTrue(h.validate());
     XCTAssertEqual(h.removeFirst(), expected);
   }
@@ -64,7 +64,7 @@ class HeapTest: XCTestCase {
     var h: Heap<UInt32> = Heap<UInt32>();
     h.add(0);
     h.add(1);
-    XCTAssertEqual(h.top(), 0);
+    XCTAssertEqual(h.top()!, 0);
   }
 
   func testTopIsMinForMinHeap() {
@@ -77,7 +77,7 @@ class HeapTest: XCTestCase {
       }
       h.add(n);
     }
-    XCTAssertEqual(h.top(), min);
+    XCTAssertEqual(h.top()!, min);
   }
 
   func testTopIsMaxForMaxHeap() {
@@ -90,7 +90,7 @@ class HeapTest: XCTestCase {
       }
       h.add(n);
     }
-    XCTAssertEqual(h.top(), max);
+    XCTAssertEqual(h.top()!, max);
   }
 
   func testRemoveFirstRetainsValidity() {
