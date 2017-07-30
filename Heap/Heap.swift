@@ -14,7 +14,7 @@ struct Heap<T: Comparable> {
    * children are at 2n+1 and 2n+2.
    */
   private var storage: Array<T>;
-  private var comparator: (T, T) -> Bool;
+  private var predicate: (T, T) -> Bool;
 
   enum HeapType: Int {
     case minHeap, maxHeap
@@ -27,9 +27,9 @@ struct Heap<T: Comparable> {
   init(heapType: HeapType) {
     switch heapType {
     case .maxHeap:
-      comparator = (>);
+      predicate = (>);
     default:
-      comparator = (<);
+      predicate = (<);
     }
     self.storage = Array<T>();
   }
@@ -72,10 +72,10 @@ struct Heap<T: Comparable> {
     let cidx1 = 2 * idx + 1;
     let cidx2 = 2 * idx + 2;
 
-    if cidx1 < storage.count && !comparator(storage[idx], storage[cidx1]) {
+    if cidx1 < storage.count && !predicate(storage[idx], storage[cidx1]) {
       return false;
     }
-    if cidx2 < storage.count && !comparator(storage[idx], storage[cidx2]) {
+    if cidx2 < storage.count && !predicate(storage[idx], storage[cidx2]) {
       return false;
     }
     return true;
@@ -88,7 +88,7 @@ struct Heap<T: Comparable> {
       if cidx < storage.count {
         let val = storage[idx];
         let cval = storage[cidx];
-        if !comparator(val, cval) {
+        if !predicate(val, cval) {
           storage[idx] = cval;
           storage[cidx] = val;
           self.siftDown(fromIndex: cidx);
@@ -104,7 +104,7 @@ struct Heap<T: Comparable> {
       pidx = (idx - 1) / 2;
       let val = storage[idx];
       let pval = storage[pidx];
-      if !comparator(pval, val) {
+      if !predicate(pval, val) {
         storage[pidx] = val;
         storage[idx] = pval;
       }
