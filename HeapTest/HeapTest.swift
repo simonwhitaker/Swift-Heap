@@ -26,21 +26,8 @@ struct StringWithLength: Comparable {
 }
 
 class HeapTest: XCTestCase {
-
-  override func setUp() {
-    super.setUp()
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-  }
-
-  override func tearDown() {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    super.tearDown()
-  }
-
   func testAddAndTop() {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    var h: Heap<Int> = Heap<Int>();
+    var h = Heap<Int>();
 
     h.add(34);
     XCTAssertEqual(h.top!, 34);
@@ -56,7 +43,7 @@ class HeapTest: XCTestCase {
   }
 
   func testValidation() {
-    var h: Heap<Int> = Heap<Int>()
+    var h = Heap<Int>()
 
     for _ in 0 ..< 100 {
       h.add(Int(arc4random()));
@@ -66,7 +53,7 @@ class HeapTest: XCTestCase {
   }
 
   func testRemoveFirst() {
-    var h: Heap<Int> = Heap<Int>()
+    var h = Heap<Int>()
 
     for _ in 0 ..< 100 {
       h.add(Int(arc4random()));
@@ -78,15 +65,15 @@ class HeapTest: XCTestCase {
   }
 
   func testDefaultTypeIsMinHeap() {
-    var h: Heap<UInt32> = Heap<UInt32>();
+    var h = Heap<Int>();
     h.add(0);
     h.add(1);
     XCTAssertEqual(h.top!, 0);
   }
 
   func testTopIsMinForMinHeap() {
-    var h: Heap<UInt32> = Heap<UInt32>(heapType: .minHeap);
-    var min: UInt32 = UInt32.max;
+    var h = Heap<UInt32>(heapType: .minHeap);
+    var min = UInt32.max;
     for _ in 0 ..< 10000 {
       let n = arc4random();
       if n < min {
@@ -98,8 +85,8 @@ class HeapTest: XCTestCase {
   }
 
   func testTopIsMaxForMaxHeap() {
-    var h: Heap<UInt32> = Heap<UInt32>(heapType: .maxHeap);
-    var max: UInt32 = UInt32.min;
+    var h = Heap<UInt32>(heapType: .maxHeap);
+    var max = UInt32.min;
     for _ in 0 ..< 10000 {
       let n = arc4random();
       if n > max {
@@ -111,10 +98,10 @@ class HeapTest: XCTestCase {
   }
 
   func testRemoveFirstRetainsValidity() {
-    var h: Heap<Int> = Heap<Int>()
+    var h = Heap<Int>()
 
-    let max = 99
-    for i in 0 ... 99 {
+    let max = 9
+    for i in 0...max {
       h.add(max - i);
     }
 
@@ -123,8 +110,17 @@ class HeapTest: XCTestCase {
     XCTAssertTrue(h.validate());
   }
 
+  func testString() {
+    var h = Heap<String>();
+    h.add("b");
+    h.add("c");
+    XCTAssertEqual(h.top!, "b");
+    h.add("a");
+    XCTAssertEqual(h.top!, "a");
+  }
+
   func testCustomType() {
-    var h: Heap<StringWithLength> = Heap<StringWithLength>();
+    var h = Heap<StringWithLength>();
     h.add(StringWithLength("aaa"));
     h.add(StringWithLength("b"));
     h.add(StringWithLength("cc"));
