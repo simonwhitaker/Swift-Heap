@@ -8,6 +8,23 @@
 
 import XCTest
 
+struct StringWithLength: Comparable {
+  let string: String;
+  let length: Int;
+  init(_ string: String) {
+    self.string = string
+    self.length = string.characters.count
+  }
+
+  static func < (lhs: StringWithLength, rhs: StringWithLength) -> Bool {
+    return lhs.length < rhs.length;
+  }
+
+  static func == (lhs: StringWithLength, rhs: StringWithLength) -> Bool {
+    return lhs.length == rhs.length;
+  }
+}
+
 class HeapTest: XCTestCase {
 
   override func setUp() {
@@ -104,5 +121,13 @@ class HeapTest: XCTestCase {
     XCTAssertTrue(h.validate());
     let _ = h.removeFirst();
     XCTAssertTrue(h.validate());
+  }
+
+  func testCustomType() {
+    var h: Heap<StringWithLength> = Heap<StringWithLength>();
+    h.add(StringWithLength("aaa"));
+    h.add(StringWithLength("b"));
+    h.add(StringWithLength("cc"));
+    XCTAssertEqual(h.top()!.string, "b");
   }
 }
