@@ -9,27 +9,81 @@
 import XCTest
 
 class HeapTest: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+  override func setUp() {
+    super.setUp()
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+  }
+
+  override func tearDown() {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    super.tearDown()
+  }
+
+  func testAddAndTop() {
+    // This is an example of a functional test case.
+    // Use XCTAssert and related functions to verify your tests produce the correct results.
+    var h: Heap<Int> = Heap<Int>();
+
+    h.add(34);
+    XCTAssertEqual(h.top(), 34);
+
+    h.add(21);
+    XCTAssertEqual(h.top(), 21);
+
+    h.add(22);
+    XCTAssertEqual(h.top(), 21);
+
+    h.add(2);
+    XCTAssertEqual(h.top(), 2);
+  }
+
+  func testValidation() {
+    var h: Heap<Int> = Heap<Int>()
+
+    for _ in 0 ..< 100 {
+      h.add(Int(arc4random()));
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+
+    XCTAssertTrue(h.underlyingStorage[0] == h.underlyingStorage.min()!);
+    XCTAssertTrue(h.validate());
+  }
+
+  func testRemoveFirst() {
+    var h: Heap<Int> = Heap<Int>()
+
+    for _ in 0 ..< 100 {
+      h.add(Int(arc4random()));
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+    let expected = h.top();
+    XCTAssertTrue(h.validate());
+    XCTAssertEqual(h.removeFirst(), expected);
+  }
+
+  func testTopIsMin() {
+    var h: Heap<UInt32> = Heap<UInt32>();
+    var min: UInt32 = UInt32.max;
+    for _ in 0 ..< 10000 {
+      let n = arc4random();
+      if n < min {
+        min = n;
+      }
+      h.add(n);
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    XCTAssertEqual(h.top(), min);
+  }
+
+  func testRemoveFirstRetainsValidity() {
+    var h: Heap<Int> = Heap<Int>()
+
+    let max = 99
+    for i in 0 ... 99 {
+      h.add(max - i);
     }
-    
+
+    XCTAssertTrue(h.validate());
+    let _ = h.removeFirst();
+    XCTAssertTrue(h.validate());
+  }
 }

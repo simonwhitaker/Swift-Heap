@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F406350F1F2DC84B00AEC58A /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406350E1F2DC84B00AEC58A /* main.swift */; };
+		F406351C1F2DC86200AEC58A /* HeapTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F406351B1F2DC86200AEC58A /* HeapTest.swift */; };
+		F40635221F2DC87C00AEC58A /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40635211F2DC87C00AEC58A /* Heap.swift */; };
+		F40635231F2DCA7F00AEC58A /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40635211F2DC87C00AEC58A /* Heap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +28,21 @@
 /* Begin PBXFileReference section */
 		F406350B1F2DC84B00AEC58A /* Heap */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Heap; sourceTree = BUILT_PRODUCTS_DIR; };
 		F406350E1F2DC84B00AEC58A /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F40635191F2DC86200AEC58A /* HeapTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeapTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F406351B1F2DC86200AEC58A /* HeapTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeapTest.swift; sourceTree = "<group>"; };
+		F406351D1F2DC86200AEC58A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F40635211F2DC87C00AEC58A /* Heap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F40635081F2DC84B00AEC58A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F40635161F2DC86100AEC58A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				F406350D1F2DC84B00AEC58A /* Heap */,
+				F406351A1F2DC86200AEC58A /* HeapTest */,
 				F406350C1F2DC84B00AEC58A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				F406350B1F2DC84B00AEC58A /* Heap */,
+				F40635191F2DC86200AEC58A /* HeapTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -58,8 +74,18 @@
 			isa = PBXGroup;
 			children = (
 				F406350E1F2DC84B00AEC58A /* main.swift */,
+				F40635211F2DC87C00AEC58A /* Heap.swift */,
 			);
 			path = Heap;
+			sourceTree = "<group>";
+		};
+		F406351A1F2DC86200AEC58A /* HeapTest */ = {
+			isa = PBXGroup;
+			children = (
+				F406351B1F2DC86200AEC58A /* HeapTest.swift */,
+				F406351D1F2DC86200AEC58A /* Info.plist */,
+			);
+			path = HeapTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +108,23 @@
 			productReference = F406350B1F2DC84B00AEC58A /* Heap */;
 			productType = "com.apple.product-type.tool";
 		};
+		F40635181F2DC86100AEC58A /* HeapTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F406351E1F2DC86200AEC58A /* Build configuration list for PBXNativeTarget "HeapTest" */;
+			buildPhases = (
+				F40635151F2DC86100AEC58A /* Sources */,
+				F40635161F2DC86100AEC58A /* Frameworks */,
+				F40635171F2DC86100AEC58A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HeapTest;
+			productName = HeapTest;
+			productReference = F40635191F2DC86200AEC58A /* HeapTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +136,11 @@
 				ORGANIZATIONNAME = "Simon Whitaker";
 				TargetAttributes = {
 					F406350A1F2DC84B00AEC58A = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = VW9QM42U4U;
+						ProvisioningStyle = Automatic;
+					};
+					F40635181F2DC86100AEC58A = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = VW9QM42U4U;
 						ProvisioningStyle = Automatic;
@@ -112,9 +160,20 @@
 			projectRoot = "";
 			targets = (
 				F406350A1F2DC84B00AEC58A /* Heap */,
+				F40635181F2DC86100AEC58A /* HeapTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F40635171F2DC86100AEC58A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F40635071F2DC84B00AEC58A /* Sources */ = {
@@ -122,6 +181,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				F406350F1F2DC84B00AEC58A /* main.swift in Sources */,
+				F40635221F2DC87C00AEC58A /* Heap.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F40635151F2DC86100AEC58A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F406351C1F2DC86200AEC58A /* HeapTest.swift in Sources */,
+				F40635231F2DCA7F00AEC58A /* Heap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +305,34 @@
 			};
 			name = Release;
 		};
+		F406351F1F2DC86200AEC58A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VW9QM42U4U;
+				INFOPLIST_FILE = HeapTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.netcetera.HeapTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F40635201F2DC86200AEC58A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VW9QM42U4U;
+				INFOPLIST_FILE = HeapTest/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.netcetera.HeapTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -253,6 +350,14 @@
 			buildConfigurations = (
 				F40635131F2DC84B00AEC58A /* Debug */,
 				F40635141F2DC84B00AEC58A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F406351E1F2DC86200AEC58A /* Build configuration list for PBXNativeTarget "HeapTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F406351F1F2DC86200AEC58A /* Debug */,
+				F40635201F2DC86200AEC58A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
