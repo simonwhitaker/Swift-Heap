@@ -20,8 +20,9 @@ struct Heap<T> {
    * Heap<T> stores its data in an array. For any element and index n, its
    * children are at 2n+1 and 2n+2.
    */
-  private var storage: Array<T>;
   typealias Comparator = (T, T) -> Bool;
+
+  private var storage: Array<T>;
   private var comparator: Comparator;
 
   // Initialisation
