@@ -8,32 +8,27 @@
 
 import Foundation
 
-struct Heap<T: Comparable> {
+extension Heap where T: Comparable {
+  // If T is Comparable, add a convenience constructor that creates a min heap
+  init() {
+    self.init(comparator: <);
+  }
+}
+
+struct Heap<T> {
   /*
    * Heap<T> stores its data in an array. For any element and index n, its
    * children are at 2n+1 and 2n+2.
    */
   private var storage: Array<T>;
-  private var predicate: (T, T) -> Bool;
-
-  enum HeapType: Int {
-    case minHeap, maxHeap
-  }
+  typealias Comparator = (T, T) -> Bool;
+  private var comparator: Comparator;
 
   // Initialisation
 
-  init() {
-    self.init(heapType: .minHeap);
-  }
-
-  init(heapType: HeapType) {
-    switch heapType {
-    case .maxHeap:
-      predicate = (>);
-    default:
-      predicate = (<);
-    }
+  init(comparator: @escaping Comparator) {
     self.storage = Array<T>();
+    self.comparator = comparator;
   }
 
   // Public properties
@@ -76,7 +71,7 @@ struct Heap<T: Comparable> {
       if cidx < storage.count {
         let val = storage[idx];
         let cval = storage[cidx];
-        if !predicate(val, cval) {
+        if !comparator(val, cval) {
           storage[idx] = cval;
           storage[cidx] = val;
           self.siftDown(fromIndex: cidx);
@@ -92,7 +87,7 @@ struct Heap<T: Comparable> {
       pidx = (idx - 1) / 2;
       let val = storage[idx];
       let pval = storage[pidx];
-      if !predicate(pval, val) {
+      if !comparator(pval, val) {
         storage[pidx] = val;
         storage[idx] = pval;
       }
@@ -116,12 +111,13 @@ struct Heap<T: Comparable> {
     let cidx1 = 2 * idx + 1;
     let cidx2 = 2 * idx + 2;
 
-    if cidx1 < storage.count && !predicate(storage[idx], storage[cidx1]) {
+    if cidx1 < storage.count && !comparator(storage[idx], storage[cidx1]) {
       return false;
     }
-    if cidx2 < storage.count && !predicate(storage[idx], storage[cidx2]) {
+    if cidx2 < storage.count && !comparator(storage[idx], storage[cidx2]) {
       return false;
     }
     return true;
   }
 }
+

@@ -8,6 +8,15 @@
 
 import XCTest
 
+struct IncomparableStringWithLength {
+  let string: String;
+  let length: Int;
+  init(_ string: String) {
+    self.string = string
+    self.length = string.characters.count
+  }
+}
+
 struct StringWithLength: Comparable {
   let string: String;
   let length: Int;
@@ -72,7 +81,7 @@ class HeapTest: XCTestCase {
   }
 
   func testTopIsMinForMinHeap() {
-    var h = Heap<UInt32>(heapType: .minHeap);
+    var h = Heap<UInt32>();
     var min = UInt32.max;
     for _ in 0 ..< 10000 {
       let n = arc4random();
@@ -85,7 +94,7 @@ class HeapTest: XCTestCase {
   }
 
   func testTopIsMaxForMaxHeap() {
-    var h = Heap<UInt32>(heapType: .maxHeap);
+    var h = Heap<UInt32>(comparator: >);
     var max = UInt32.min;
     for _ in 0 ..< 10000 {
       let n = arc4random();
@@ -119,7 +128,15 @@ class HeapTest: XCTestCase {
     XCTAssertEqual(h.top!, "a");
   }
 
-  func testCustomType() {
+  func testCustomComparator() {
+    var h = Heap<IncomparableStringWithLength> { $0.length < $1.length }
+    h.add(IncomparableStringWithLength("aaa"));
+    h.add(IncomparableStringWithLength("b"));
+    h.add(IncomparableStringWithLength("cc"));
+    XCTAssertEqual(h.top!.string, "b");
+  }
+
+  func testCustomComparableType() {
     var h = Heap<StringWithLength>();
     h.add(StringWithLength("aaa"));
     h.add(StringWithLength("b"));
