@@ -8,7 +8,7 @@
 
 import XCTest
 
-struct IncomparableStringWithLength {
+struct StringWithLength {
   let string: String;
   let length: Int;
   init(_ string: String) {
@@ -17,7 +17,7 @@ struct IncomparableStringWithLength {
   }
 }
 
-struct StringWithLength: Comparable {
+struct ComparableStringWithLength: Comparable {
   let string: String;
   let length: Int;
   init(_ string: String) {
@@ -25,11 +25,11 @@ struct StringWithLength: Comparable {
     self.length = string.characters.count
   }
 
-  static func < (lhs: StringWithLength, rhs: StringWithLength) -> Bool {
+  static func < (lhs: ComparableStringWithLength, rhs: ComparableStringWithLength) -> Bool {
     return lhs.length < rhs.length;
   }
 
-  static func == (lhs: StringWithLength, rhs: StringWithLength) -> Bool {
+  static func == (lhs: ComparableStringWithLength, rhs: ComparableStringWithLength) -> Bool {
     return lhs.length == rhs.length;
   }
 }
@@ -129,18 +129,18 @@ class HeapTest: XCTestCase {
   }
 
   func testCustomComparator() {
-    var h = Heap<IncomparableStringWithLength> { $0.length < $1.length }
-    h.add(IncomparableStringWithLength("aaa"));
-    h.add(IncomparableStringWithLength("b"));
-    h.add(IncomparableStringWithLength("cc"));
+    var h = Heap<StringWithLength> { $0.length < $1.length }
+    h.add(StringWithLength("aaa"));
+    h.add(StringWithLength("b"));
+    h.add(StringWithLength("cc"));
     XCTAssertEqual(h.top!.string, "b");
   }
 
   func testCustomComparableType() {
-    var h = Heap<StringWithLength>();
-    h.add(StringWithLength("aaa"));
-    h.add(StringWithLength("b"));
-    h.add(StringWithLength("cc"));
+    var h = Heap<ComparableStringWithLength>();
+    h.add(ComparableStringWithLength("aaa"));
+    h.add(ComparableStringWithLength("b"));
+    h.add(ComparableStringWithLength("cc"));
     XCTAssertEqual(h.top!.string, "b");
   }
 }
