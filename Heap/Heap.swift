@@ -11,7 +11,7 @@ import Foundation
 extension Heap where T: Comparable {
   // If T is Comparable, add a convenience constructor that creates a min heap
   init() {
-    self.init(comparator: <);
+    self.init(comparator: <)
   }
 }
 
@@ -20,79 +20,79 @@ struct Heap<T> {
    * Heap<T> stores its data in an array. For any element and index n, its
    * children are at 2n+1 and 2n+2.
    */
-  typealias Comparator = (T, T) -> Bool;
+  typealias Comparator = (T, T) -> Bool
 
-  private var storage: Array<T>;
-  private var comparator: Comparator;
+  private var storage: Array<T>
+  private var comparator: Comparator
 
   // Initialisation
 
   init(comparator: @escaping Comparator) {
-    self.storage = Array<T>();
-    self.comparator = comparator;
+    self.storage = Array<T>()
+    self.comparator = comparator
   }
 
   // Public properties
 
   var top: T? {
     get {
-      return storage.first;
+      return storage.first
     }
   }
 
   var count: Int {
     get {
-      return storage.count;
+      return storage.count
     }
   }
 
   // Public mutators
 
   mutating func add(_ newElement: T) {
-    storage.append(newElement);
-    self.siftUp(fromIndex: storage.count - 1);
+    storage.append(newElement)
+    self.siftUp(fromIndex: storage.count - 1)
   }
 
   mutating func removeFirst() -> T? {
     if let result = self.top,
       let tail = self.storage.popLast() {
-      self.storage[0] = tail;
+      self.storage[0] = tail
       self.siftDown(fromIndex: 0)
-      return result;
+      return result
     }
-    return nil;
+    return nil
   }
 
   // Invariant maintainers
 
   mutating private func siftDown(fromIndex: Int) {
-    let idx = fromIndex;
+    let idx = fromIndex
 
     for cidx in 2 * idx + 1 ... 2 * idx + 2 {
       if cidx < storage.count {
-        let val = storage[idx];
-        let cval = storage[cidx];
+        let val = storage[idx]
+        let cval = storage[cidx]
         if !comparator(val, cval) {
-          storage[idx] = cval;
-          storage[cidx] = val;
-          self.siftDown(fromIndex: cidx);
+          storage[idx] = cval
+          storage[cidx] = val
+          self.siftDown(fromIndex: cidx)
         }
       }
     }
   }
 
   mutating private func siftUp(fromIndex: Int) {
-    var idx = fromIndex;
-    var pidx: Int;
+    var idx = fromIndex
+    var pidx: Int
     while idx > 0 {
-      pidx = (idx - 1) / 2;
-      let val = storage[idx];
-      let pval = storage[pidx];
+      pidx = (idx - 1) / 2
+      let val = storage[idx]
+      let pval = storage[pidx]
       if !comparator(pval, val) {
-        storage[pidx] = val;
-        storage[idx] = pval;
+        storage[pidx] = val
+        storage[idx] = pval
       }
-      idx = pidx;
+      idx = pidx
     }
   }
 
@@ -101,24 +101,24 @@ struct Heap<T> {
   func validate() -> Bool {
     for i in 0 ..< storage.count {
       if !validate(elementAt: i) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
   func validate(elementAt: Int) -> Bool {
-    let idx = elementAt;
-    let cidx1 = 2 * idx + 1;
-    let cidx2 = 2 * idx + 2;
+    let idx = elementAt
+    let cidx1 = 2 * idx + 1
+    let cidx2 = 2 * idx + 2
 
     if cidx1 < storage.count && !comparator(storage[idx], storage[cidx1]) {
-      return false;
+      return false
     }
     if cidx2 < storage.count && !comparator(storage[idx], storage[cidx2]) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 }
 
