@@ -51,6 +51,16 @@ class HeapTest: XCTestCase {
     XCTAssertEqual(h.top!, 2);
   }
 
+  func testCount() {
+    var h = Heap<Int>();
+    XCTAssertEqual(h.count, 0)
+
+    for i in 1 ..< 10 {
+      h.add(i)
+      XCTAssertEqual(h.count, i)
+    }
+  }
+
   func testValidation() {
     var h = Heap<Int>()
 
@@ -71,6 +81,12 @@ class HeapTest: XCTestCase {
     let expected = h.top!;
     XCTAssertTrue(h.validate());
     XCTAssertEqual(h.removeFirst(), expected);
+  }
+
+  func testRemoveFirstOnEmptyHeap() {
+    var h = Heap<Int>()
+    let result = h.removeFirst()
+    XCTAssertNil(result)
   }
 
   func testDefaultTypeIsMinHeap() {
