@@ -95,9 +95,10 @@ struct Heap<T> {
       idx = pidx
     }
   }
+}
 
-  // Validation
-
+// MARK: - Validation
+extension Heap {
   func validate() -> Bool {
     for i in 0 ..< storage.count {
       if !validate(elementAt: i) {
