@@ -22,49 +22,40 @@ struct Heap<T> {
    */
   typealias Comparator = (T, T) -> Bool
 
-  private var storage: Array<T>
+  private var storage: [T] = []
   private var comparator: Comparator
 
-  // Initialisation
-
+  // MARK: - Initialisation
   init(comparator: @escaping Comparator) {
-    self.storage = Array<T>()
     self.comparator = comparator
   }
 
-  // Public properties
-
+  // MARK: - Public properties
   var top: T? {
-    get {
-      return storage.first
-    }
+    return storage.first
   }
 
   var count: Int {
-    get {
-      return storage.count
-    }
+    return storage.count
   }
 
-  // Public mutators
-
+  // MARK: - Public mutators
   mutating func add(_ newElement: T) {
     storage.append(newElement)
-    self.siftUp(fromIndex: storage.count - 1)
+    siftUp(fromIndex: storage.count - 1)
   }
 
   mutating func removeFirst() -> T? {
-    if let result = self.top,
-      let tail = self.storage.popLast() {
-      self.storage[0] = tail
-      self.siftDown(fromIndex: 0)
+    if let result = top,
+      let tail = storage.popLast() {
+      storage[0] = tail
+      siftDown(fromIndex: 0)
       return result
     }
     return nil
   }
 
-  // Invariant maintainers
-
+  // MARK: - Invariant maintainers
   mutating private func siftDown(fromIndex: Int) {
     let idx = fromIndex
 
@@ -75,7 +66,7 @@ struct Heap<T> {
         if !comparator(val, cval) {
           storage[idx] = cval
           storage[cidx] = val
-          self.siftDown(fromIndex: cidx)
+          siftDown(fromIndex: cidx)
         }
       }
     }
