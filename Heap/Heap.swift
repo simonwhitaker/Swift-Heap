@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias Comparator<U> = (U, U) -> Bool
+
 extension Heap where T: Comparable {
   // If T is Comparable, add a convenience constructor that creates a min heap
   init() {
@@ -20,13 +22,11 @@ struct Heap<T> {
    * Heap<T> stores its data in an array. For any element and index n, its
    * children are at 2n+1 and 2n+2.
    */
-  typealias Comparator = (T, T) -> Bool
-
   private var storage: [T] = []
-  private var comparator: Comparator
+  private var comparator: Comparator<T>
 
   // MARK: - Initialisation
-  init(comparator: @escaping Comparator) {
+  init(comparator: @escaping Comparator<T>) {
     self.comparator = comparator
   }
 
