@@ -13,7 +13,7 @@ struct StringWithLength {
   let length: Int
   init(_ string: String) {
     self.string = string
-    self.length = string.characters.count
+    self.length = string.count
   }
 }
 
@@ -22,7 +22,7 @@ struct ComparableStringWithLength: Comparable {
   let length: Int
   init(_ string: String) {
     self.string = string
-    self.length = string.characters.count
+    self.length = string.count
   }
 
   static func < (lhs: ComparableStringWithLength, rhs: ComparableStringWithLength) -> Bool {
