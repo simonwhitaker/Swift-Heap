@@ -20,7 +20,7 @@ extension Heap where T: Comparable {
 struct Heap<T> {
   /*
    * Heap<T> stores its data in an array. For any element and index n, its
-   * children are at 2n+1 and 2n+2.
+   * children are at indices 2n+1 and 2n+2.
    */
   private var storage: [T] = []
   private var comparator: Comparator<T>
