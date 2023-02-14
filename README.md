@@ -2,7 +2,7 @@
 
 ## Usage
 
-A heap over a type that conform to Comparable is a min-heap by default.
+A heap over a type that conforms to Comparable is a min-heap by default.
 
 ``` swift
 var h = Heap<Int>();
